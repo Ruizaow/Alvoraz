@@ -14,7 +14,15 @@ const EventSelectionScreen: React.FC<EventSelectionScreenProps> = ({
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center">
       {/* Table Background */}
-      <div className={`absolute inset-0 bg-[url(${background_table})] bg-cover bg-center`}></div>
+      <div
+        className={`absolute inset-0`}
+        style={{
+          backgroundImage: `url(${background_table})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
       
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-[#200700] opacity-40"></div>

@@ -38,8 +38,9 @@ const Hexagon: React.FC<HexagonProps> = ({
 
       {/* Área branca interna */}
       <div
-        className={`absolute inset-2 bg-${color}`}
+        className={`absolute inset-2`}
         style={{
+          backgroundColor: color,
           clipPath: HEX_CLIP,
         }}
       />

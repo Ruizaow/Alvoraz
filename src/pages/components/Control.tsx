@@ -29,7 +29,10 @@ const Control: React.FC<{
     <div className="flex flex-col items-center gap-1">
       <div className="flex items-start gap-2">
         <div className="flex flex-col items-center gap-1">
-          <div className={`w-24 h-24 bg-[#F7F1DE] bg-white border-2 border-[${border}] rounded-full`}>
+          <div
+            className={`w-24 h-24 bg-[#F7F1DE] bg-white border-2 rounded-full`}
+            style={{ borderColor: border }}
+          >
             <img
               src={icon}
               alt="Icon"
@@ -40,9 +43,10 @@ const Control: React.FC<{
         <div className="flex items-center rounded-full pt-6">
           <button onClick={handleDec} className="text-[#1E1E1E] flex items-center justify-center font-bold text-3xl hover:text-[#4A4A4A] transition-colors">◀</button>
           <span
-            className={`font-enriqueta w-14 text-4xl text-center text-[#1E1E1E] mb-1 ${
-              value === 6 || value === 8 ? 'translate-y-2' : ''
-            }`}
+            className="font-enriqueta w-14 text-4xl text-center text-[#1E1E1E] mb-1"
+            style={{
+              transform: value === 6 || value === 8 ? 'translateY(0.5rem)' : 'none',
+            }}
           >
             {value}
           </span>

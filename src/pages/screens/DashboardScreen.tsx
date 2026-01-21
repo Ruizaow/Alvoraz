@@ -44,7 +44,10 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({
         </Hexagon>
         <div className="flex-1">
           <h1 className="font-erica text-5xl md:text-6xl mb-2 drop-shadow-sm" style={{ color: '#2E2E2E' }}>{character.name}</h1>
-          <div className={`bg-[${theme.bg}] rounded-2xl p-6 border-2 border-[${theme.border}] shadow-md min-h-[100px] flex items-center`}>
+          <div
+            className={`rounded-2xl p-6 border-2 shadow-md min-h-[100px] flex items-center`}
+            style={{ backgroundColor: theme.bg, borderColor: theme.border }}
+          >
             <p className={`font-enriqueta text-xl md:text-2xl text-[#000000]`}>{character.description}</p>
           </div>
         </div>
@@ -88,14 +91,20 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({
             onClick={onEventsClick}
             className="bg-[#F7F1DE] rounded-3xl py-8 md:py-10 px-6 md:px-10 flex items-center justify-center gap-4 hover:scale-105 transition-all group"
           >
-            <div className={`font-erica text-[#000000] w-12 h-12 md:w-16 md:h-16 rounded-full bg-[${theme.border}] flex items-center justify-center text-white font-bold text-2xl md:text-4xl group-hover:scale-110 transition-transform`}>!</div>
+            <div
+              className={`font-erica text-[#000000] w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl md:text-4xl group-hover:scale-110 transition-transform`}
+              style={{ backgroundColor: theme.border }}
+            >!</div>
             <span className="font-erica text-3xl md:text-5xl text-[#2E2E2E]">Eventos</span>
           </button>
           <button 
             onClick={onBuyClick}
             className="bg-[#F7F1DE] rounded-3xl py-8 md:py-10 px-6 md:px-10 shadow-xl flex items-center justify-center gap-4 hover:scale-105 transition-all group"
           >
-            <div className={`w-12 h-12 md:w-16 md:h-16 bg-[${theme.border}] rounded-2xl rotate-45 shadow-lg group-hover:rotate-90 transition-transform`}></div>
+            <div
+              className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl rotate-45 shadow-lg group-hover:rotate-90 transition-transform`}
+              style={{ backgroundColor: theme.border }}
+            />
             <span className="font-erica text-3xl md:text-5xl text-[#2E2E2E]">Comprar</span>
           </button>
         </div>

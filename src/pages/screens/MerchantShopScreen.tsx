@@ -152,7 +152,15 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
 
   return (
     <div className="min-h-screen relative overflow-hidden flex transition-colors duration-500">
-      <div className={`absolute inset-0 z-0 pointer-events-none bg-[url(${merchant.background})]`}></div>
+      <div
+        className={`absolute inset-0 z-0 pointer-events-none`}
+        style={{
+          backgroundImage: `url(${merchant.background})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
 
       {merchant.id === 'marquinhos' ? (
         <div className="flex flex-1 items-end">
@@ -173,7 +181,10 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
 
           <div className="relative flex h-full items-end">
             <div className="absolute top-10 left-10 flex flex-col items-start gap-5 z-10">
-              <div className={`bg-[${merchant.color}] px-10 py-5 rounded-xl shadow-2xl`}>
+              <div
+                className={`px-10 py-5 rounded-xl shadow-2xl`}
+                style={{ backgroundColor: merchant.color }}
+              >
                 <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
               </div>
               <button
@@ -228,7 +239,10 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
 
           <div className="flex flex-1 h-full flex-col items-start p-10">
             <div className="flex flex-col items-start gap-5 z-10">
-              <div className={`bg-[${merchant.color}] px-10 py-5 rounded-xl shadow-2xl`}>
+              <div
+                className={`px-10 py-5 rounded-xl shadow-2xl`}
+                style={{ backgroundColor: merchant.color }}
+              >
                 <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
               </div>
               <button
@@ -299,7 +313,10 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
       ) : (
         <div className="flex items-end justify-center absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 flex flex-col items-start gap-5 z-10">
-            <div className={`bg-[${merchant.color}] px-10 py-5 rounded-xl shadow-2xl`}>
+            <div
+              className={`px-10 py-5 rounded-xl shadow-2xl`}
+              style={{ backgroundColor: merchant.color }}
+            >
               <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
             </div>
             <button
