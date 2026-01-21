@@ -22,10 +22,10 @@ body {
   font-style: normal;
 }
 .paper-bg {
-  background-image: url("./assets/backgrounds/background.png");
+  background-image: url("@assets/backgrounds/background.png");
 }
 .deal-card-bg {
-  background-image: url("./assets/backgrounds/background_dealcard.png");
+  background-image: url("@assets/backgrounds/background_dealcard.png");
 }
 .texture-overlay {
   background-image: url("https://www.transparenttextures.com/patterns/noisy-net.png");
