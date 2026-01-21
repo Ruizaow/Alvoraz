@@ -1,0 +1,1 @@
+**Interface visual** do jogo de tabuleiro híbrido **Alvoraz**, desenvolvido para a disciplina **Arquitetura da Informação** do curso **Design Digital** da **Universidade Federal do Ceará (UFC)**, *Campus Quixadá*.

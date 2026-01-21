@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Enriqueta", serif;
+  font-weight: 600;
+  background-color: #f3e5ab;
+}
+.font-farro {
+  font-family: "Farro", sans-serif;
+  font-weight: 500;
+}
+.font-erica {
+  font-family: "Erica One", cursive;
+}
+.font-enriqueta {
+  font-family: "Enriqueta", serif;
+}
+.font-enriqueta-regular {
+  font-family: "Enriqueta", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.paper-bg {
+  background-image: url("./assets/backgrounds/background.png");
+}
+.deal-card-bg {
+  background-image: url("./assets/backgrounds/background_dealcard.png");
+}
+.texture-overlay {
+  background-image: url("https://www.transparenttextures.com/patterns/noisy-net.png");
+  pointer-events: none;
+}

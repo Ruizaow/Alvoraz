@@ -1,0 +1,5 @@
+{
+  "name": "Alvoraz - Interface Digital",
+  "description": "Uma interface digital para o jogo de tabuleiro híbrido Alvoraz, permitindo a gestão de recursos, armas e interação com mercadores.",
+  "requestFramePermissions": []
+}
