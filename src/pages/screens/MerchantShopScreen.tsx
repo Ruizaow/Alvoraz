@@ -51,7 +51,7 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
         ? merchant.angryImage
         : merchant.image;
   
-  const deals = isAngryOwl ? merchant.angryDeals : merchant.deals
+  const deals = isAngryOwl ? merchant.angryDeals : merchant.deals;
   
   const noResourcesSpeech =
     isChico && isChicoSafado
@@ -151,9 +151,10 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
     : deals;
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex transition-colors duration-500">
+    <div className="min-h-screen relative overflow-hidden flex transition-colors duration-500 px-2 sm:px-4 md:px-0">
+      {/* Background */}
       <div
-        className={`absolute inset-0 z-0 pointer-events-none`}
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `url(${merchant.background})`,
           backgroundSize: 'cover',
@@ -162,245 +163,127 @@ const MerchantShopScreen: React.FC<MerchantShopScreenProps> = ({
         }}
       />
 
-      {merchant.id === 'marquinhos' ? (
-        <div className="flex flex-1 items-end">
-          <div className="flex flex-col h-full bg-white deal-card-bg backdrop-blur-md shadow-2xl">
-            {deals.map((deal, idx) => (
+      {/* Conteúdo principal */}
+      <div className="flex flex-1 flex-col md:flex-row items-end justify-center w-full gap-4 md:gap-0">
+
+        {/* Deal Cards (lado esquerdo em desktop) */}
+        { merchant.id === 'chico' ? (
+          <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-6 justify-center md:justify-start flex-1 md:flex-none">
+            {chicoDeals.map((deal, idx) => (
               <MerchantDealCard
                 key={idx}
-                {...(deal.type === 'weapon'
-                  ? { weapon: deal.weapon }
-                  : { construction: deal.construction })}
+                {...(deal.type === 'weapon' ? { weapon: deal.weapon } : { construction: deal.construction })}
                 costs={deal.costs}
                 merchantColor={merchant.color}
-                customStyle={'pl-6 pr-10'}
+                isColumn={true}
+                customStyle="mb-2 sm:mb-0"
                 onClick={() => handleAttemptPurchase(deal)}
               />
             ))}
           </div>
+        ) : (
+          <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-6 justify-center md:justify-start flex-1 md:flex-none">
+            {deals.map((deal, idx) => (
+              <MerchantDealCard
+                key={idx}
+                {...(deal.type === 'weapon' ? { weapon: deal.weapon } : { construction: deal.construction })}
+                costs={deal.costs}
+                merchantColor={merchant.color}
+                isColumn={true}
+                customStyle="mb-2 sm:mb-0"
+                onClick={() => handleAttemptPurchase(deal)}
+              />
+            ))}
+          </div>
+        )}
 
-          <div className="relative flex h-full items-end">
-            <div className="absolute top-10 left-10 flex flex-col items-start gap-5 z-10">
-              <div
-                className={`px-10 py-5 rounded-xl shadow-2xl`}
-                style={{ backgroundColor: merchant.color }}
-              >
-                <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
+        {/* Balão de fala e personagem */}
+        <div className="relative flex flex-col items-center md:items-start w-full md:w-auto">
+          <div className={`
+            absolute z-10
+            ${isChico && isChicoSafado ? '-top-60' : '-top-40'}
+            sm:-top-40 left-1/2 md:left-40
+            transform -translate-x-1/2 md:translate-x-0
+            p-4 sm:p-10
+            bg-[#fef9c3]
+            rounded-[2rem] sm:rounded-[3rem]
+            border-4 border-[#e5d9b6]
+            shadow-2xl
+            max-w-xs sm:max-w-md
+            animate-bounce-slow`}
+          >
+            <p className="text-xl sm:text-3xl text-[#4a3225] text-center leading-relaxed font-bold">
+              {canBuy ? speech : noResourcesSpeech}
+            </p>
+
+            {isChico && isChicoSafado && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={() => {
+                    setIsChicoSafado(false);
+                    setChicoSafadoDenied(true);
+                    setChicoNoMoneyItems(new Set());
+                    setCanBuy(true);
+                    setBuyingItem(null);
+                  }}
+                    className="bg-red-500 text-white text-2xl px-10 py-3 rounded-2xl shadow-lg hover:bg-red-600 transition"
+                >
+                  Negar
+                </button>
               </div>
-              <button
-                onClick={onBack}
-                className="p-4 rounded-full bg-white/50 border border-[#b45309]/20 hover:bg-white transition-all shadow-md group"
-              >
-                <span className={`text-4xl px-2 pb-1 group-hover:-translate-x-1 inline-block transition-transform`}>←</span>
-              </button>
-            </div>
+            )}
             
-            <div className="relative">
-              <div className="absolute z-10 -top-40 left-1/2 ml-40 bg-[#fef9c3] p-10 rounded-[3rem] border-4 border-[#e5d9b6] shadow-2xl max-w-md animate-bounce-slow">
-                <p className="text-3xl text-[#4a3225] text-center leading-relaxed font-bold">
-                  {canBuy
-                    ? speech
-                    : noResourcesSpeech
-                  }
-                </p>
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[25px] border-t-[#e5d9b6]"></div>
-              </div>
-
-              <div className="relative group ml-80">
-                <img 
-                  src={image} 
-                  alt={merchant.name} 
-                  className={`h-[650px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-700 ${isAngryOwl ? 'grayscale-[0.5] sepia-[0.3]' : ''}`}
-                />
-              </div>
-            </div>
+            <div className="absolute -bottom-4 sm:-bottom-6 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] sm:border-l-[20px] border-l-transparent border-r-[12px] sm:border-r-[20px] border-r-transparent border-t-[15px] sm:border-t-[25px] border-t-[#e5d9b6]" />
           </div>
+
+          <img
+            src={image}
+            alt={merchant.name}
+            className="h-64 sm:h-[450px] md:h-[650px] lg:h-[650px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-700"
+          />
         </div>
-      ) : merchant.id === 'chico' ? (
-        <div className="flex flex-1 justify-between items-end">
-          <div className="flex h-full bg-white deal-card-bg backdrop-blur-md shadow-2xl">
-            <MerchantDealCard
-              weapon={chicoDeals[0].weapon}
-              costs={chicoDeals[0].costs}
-              merchantColor={merchant.color}
-              isColumn={true}
-              customStyle={'pl-6'}
-              onClick={() => handleAttemptPurchase(chicoDeals[0])}
-            />
-            <MerchantDealCard
-              construction={chicoDeals[2].construction}
-              costs={chicoDeals[2].costs}
-              merchantColor={merchant.color}
-              isColumn={true}
-              customStyle={'pl-8 pr-10'}
-              onClick={() => handleAttemptPurchase(chicoDeals[2])}
-            />
-          </div>
 
-          <div className="flex flex-1 h-full flex-col items-start p-10">
-            <div className="flex flex-col items-start gap-5 z-10">
-              <div
-                className={`px-10 py-5 rounded-xl shadow-2xl`}
-                style={{ backgroundColor: merchant.color }}
-              >
-                <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
-              </div>
-              <button
-                onClick={onBack}
-                className="p-4 rounded-full bg-white/50 border border-[#b45309]/20 hover:bg-white transition-all shadow-md group"
-              >
-                <span className={`text-4xl px-2 pb-1 group-hover:-translate-x-1 inline-block transition-transform`}>←</span>
-              </button>
-            </div>
-            
-            <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-0 pointer-events-none">
-              {/* Balão */}
-              <div className="absolute z-10 -top-48 left-1/2 -translate-x-1/2 bg-[#fef9c3] p-10 rounded-[3rem] border-4 border-[#e5d9b6] shadow-2xl max-w-md animate-bounce-slow pointer-events-auto">
-                <p className="text-3xl text-[#4a3225] text-center leading-relaxed font-bold">
-                  {canBuy ? speech : noResourcesSpeech}
-                </p>
-
-                {isChico && isChicoSafado && (
-                  <div className="flex justify-center mt-6">
-                    <button
-                      onClick={() => {
-                        setIsChicoSafado(false);
-                        setChicoSafadoDenied(true);
-                        setChicoNoMoneyItems(new Set());
-                        setCanBuy(true);
-                        setBuyingItem(null);
-                      }}
-                      className="bg-red-500 text-white text-2xl px-10 py-3 rounded-2xl shadow-lg hover:bg-red-600 transition"
-                    >
-                      Negar
-                    </button>
-                  </div>
-                )}
-
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-0 h-0
-                  border-l-[20px] border-l-transparent
-                  border-r-[20px] border-r-transparent
-                  border-t-[25px] border-t-[#e5d9b6]" />
-              </div>
-
-              {/* Personagem */}
-              <img
-                src={image}
-                alt={merchant.name}
-                className="h-[650px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-700" />
-            </div>
-          </div>
-
-          <div className="flex h-full bg-white deal-card-bg backdrop-blur-md shadow-2xl">
-            <MerchantDealCard
-              weapon={chicoDeals[1].weapon}
-              costs={chicoDeals[1].costs}
-              merchantColor={merchant.color}
-              isColumn={true}
-              customStyle={'pl-10 pr-8'}
-              onClick={() => handleAttemptPurchase(chicoDeals[1])}
-            />
-            <MerchantDealCard
-              construction={chicoDeals[3].construction}
-              costs={chicoDeals[3].costs}
-              merchantColor={merchant.color}
-              isColumn={true}
-              customStyle={'pr-6'}
-              onClick={() => handleAttemptPurchase(chicoDeals[3])}
-            />
-          </div>
+        {/* Botão de voltar */}
+        <div className="absolute top-4 left-4 sm:top-8 sm:left-8 z-20">
+          <button
+            onClick={onBack}
+            className="p-2 sm:p-4 rounded-full bg-white/50 border border-[#b45309]/20 hover:bg-white transition-all shadow-md"
+          >
+            <span className="text-2xl sm:text-4xl px-2 pb-1">←</span>
+          </button>
         </div>
-      ) : (
-        <div className="flex items-end justify-center absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 flex flex-col items-start gap-5 z-10">
-            <div
-              className={`px-10 py-5 rounded-xl shadow-2xl`}
-              style={{ backgroundColor: merchant.color }}
-            >
-              <h1 className="font-erica text-3xl text-white tracking-widest">{merchant.name}</h1>
-            </div>
-            <button
-              onClick={onBack}
-              className="p-4 rounded-full bg-white/50 border border-[#b45309]/20 hover:bg-white transition-all shadow-md group"
-            >
-              <span className={`text-4xl px-2 pb-1 group-hover:-translate-x-1 inline-block transition-transform`}>←</span>
-            </button>
-          </div>
-          
-          <div className="flex justify-end items-center">
-            <div className="relative h-screen overflow-hidden">
-              <img
-                src={merchant.image2}
-                alt={merchant.name}
-                className="mt-7 h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-screen w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all" />
-            </div>
-            <div className="absolute top-40">
-              <div className="flex gap-4 pointer-events-auto">
-                {deals.map((deal, idx) => (
-                  <MerchantDealCard
-                    key={idx}
-                    {...(deal.type === 'weapon'
-                      ? { weapon: deal.weapon }
-                      : { construction: deal.construction })}
-                    costs={deal.costs}
-                    merchantColor={merchant.color}
-                    isColumn={true}
-                    onClick={() => handleAttemptPurchase(deal)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+      </div>
 
-          <div className="flex justify-start items-center">
-            <div className="relative h-screen overflow-hidden">
-              <img
-                src={merchant.image}
-                alt={merchant.name}
-                className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-screen w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all" />
-            </div>
-            <div className="absolute z-10 right-20 mt-5 bg-[#fef9c3] p-10 rounded-[3rem] border-4 border-[#e5d9b6] shadow-2xl max-w-md animate-bounce-slow">
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[25px] border-b-[#e5d9b6]"></div>
-              <p className="text-3xl text-[#4a3225] text-center leading-relaxed font-bold">
-                {canBuy
-                  ? speech
-                  : noResourcesSpeech
-                }
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
+      {/* Modal de confirmação de compra */}
       {buyingItem && canBuy && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-[#fef9c3] rounded-[3rem] p-12 max-w-xl border-8 border-[#b45309]/30 shadow-2xl text-center">
-            <h2 className="font-enriqueta text-5xl mb-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-2 sm:p-4">
+          <div className="bg-[#fef9c3] rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-12 max-w-xs sm:max-w-xl border-4 sm:border-8 border-[#b45309]/30 shadow-2xl text-center">
+            <h2 className="font-enriqueta text-2xl sm:text-5xl mb-4 sm:mb-8">
               Confirmar Compra?
             </h2>
 
-            <p className="text-3xl mb-8 leading-snug">
+            <p className="text-base sm:text-3xl mb-4 sm:mb-8 leading-snug">
               Você deseja comprar a {itemTypeLabel}{' '}
               <span className="font-bold text-[#b45309] uppercase">
                 {itemLabel}
               </span>?
             </p>
 
-            <p className="text-3xl mb-8 leading-snug">
+            <p className="text-base sm:text-3xl mb-4 sm:mb-8 leading-snug">
               Você gastará {costSummary} para comprar essa {itemTypeLabel}.
             </p>
 
-            <div className="flex gap-8 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center">
               <button
                 onClick={() => setBuyingItem(null)}
-                className="bg-red-500 text-white text-3xl px-12 py-4 rounded-2xl shadow-lg"
+                className="bg-red-500 text-white text-lg sm:text-3xl px-6 sm:px-12 py-2 sm:py-4 rounded-2xl shadow-lg"
               >
                 Não
               </button>
 
               <button
                 onClick={() => onPurchase(buyingItem)}
-                className="bg-[#22c55e] text-white text-3xl px-12 py-4 rounded-2xl shadow-lg"
+                className="bg-[#22c55e] text-white text-lg sm:text-3xl px-6 sm:px-12 py-2 sm:py-4 rounded-2xl shadow-lg"
               >
                 Sim, comprar
               </button>

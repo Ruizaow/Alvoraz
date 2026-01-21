@@ -23,41 +23,78 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
   return (
     <div
-      className="p-6 md:p-10 h-full relative overflow-y-auto"
+      className="
+        px-4 py-6
+        md:p-10
+        min-h-screen
+        relative
+        overflow-y-auto
+      "
       style={{ backgroundColor: theme.bg }}
     >
-      <div className="flex flex-col md:flex-row items-start gap-8 mb-10">
-        <Hexagon color={character.color} size={160}>
-           <img 
-            src={encodeURI(character.image)} 
-            className="w-full h-full object-contain rounded-md" 
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const parent = target.parentElement;
-              if (parent) {
-                parent.classList.add('flex', 'items-center', 'justify-center');
-                parent.innerHTML = `<span class="text-5xl font-erica text-[#4a3225]">${character.name[0]}</span>`;
-              }
-            }}
-           />
-        </Hexagon>
+      <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 mb-8 md:mb-10">
+        <div className="block md:hidden">
+          <Hexagon color={character.color} size={120}>
+            <img 
+              src={encodeURI(character.image)} 
+              className="w-full h-full object-contain rounded-md" 
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.classList.add('flex', 'items-center', 'justify-center');
+                  parent.innerHTML = `<span class="text-5xl font-erica text-[#4a3225]">${character.name[0]}</span>`;
+                }
+              }}
+            />
+          </Hexagon>
+        </div>
+        <div className="hidden md:block">
+          <Hexagon color={character.color} size={160}>
+            <img 
+              src={encodeURI(character.image)} 
+              className="w-full h-full object-contain rounded-md" 
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.classList.add('flex', 'items-center', 'justify-center');
+                  parent.innerHTML = `<span class="text-5xl font-erica text-[#4a3225]">${character.name[0]}</span>`;
+                }
+              }}
+            />
+          </Hexagon>
+        </div>
         <div className="flex-1">
-          <h1 className="font-erica text-5xl md:text-6xl mb-2 drop-shadow-sm" style={{ color: '#2E2E2E' }}>{character.name}</h1>
+          <h1 className="font-erica text-3xl md:text-6xl mb-2 text-[#2E2E2E]">
+            {character.name}
+          </h1>
           <div
-            className={`rounded-2xl p-6 border-2 shadow-md min-h-[100px] flex items-center`}
+            className="rounded-2xl p-4 md:p-6 border-2 shadow-md"
             style={{ backgroundColor: theme.bg, borderColor: theme.border }}
           >
-            <p className={`font-enriqueta text-xl md:text-2xl text-[#000000]`}>{character.description}</p>
+            <p className="font-enriqueta text-base md:text-2xl text-black">
+              {character.description}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 pb-10">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 pb-10">
         {/* Resources Grid */}
-        <div className="flex flex-col items-center md:col-span-4 bg-white/30 p-6 rounded-[2rem] border border-white/50 backdrop-blur-sm">
-          <h2 className="font-enriqueta text-4xl mb-8 text-[#000000]">Recursos</h2>
-          <div className="grid grid-cols-2 gap-y-6 gap-x-16">
+        <div className="
+          flex flex-col items-center
+          md:col-span-4
+          bg-white/30
+          p-4 md:p-6
+          rounded-3xl
+          border border-white/50
+          backdrop-blur-sm
+        ">
+          <h2 className="font-enriqueta text-2xl md:text-4xl mb-6 text-black">Recursos</h2>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4 md:gap-x-16 md:gap-y-6">
             <Control label="Açúcar" icon={RESOURCE_ICONS.sugar} border={theme.border} value={resources.sugar} onChange={(v) => onUpdateResource('sugar', v - resources.sugar)} />
             <Control label="Carvão" icon={RESOURCE_ICONS.coal} border={theme.border} value={resources.coal} onChange={(v) => onUpdateResource('coal', v - resources.coal)} />
             <Control label="Madeira" icon={RESOURCE_ICONS.wood} border={theme.border} value={resources.wood} onChange={(v) => onUpdateResource('wood', v - resources.wood)} />
@@ -85,27 +122,56 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="md:col-span-4 flex flex-col gap-8 justify-center h-full">
-          <h2 className="font-enriqueta text-4xl mb-2 text-center text-[#000000]">Menu de Ação</h2>
+        <div className="md:col-span-4 flex flex-col gap-6 md:gap-8 justify-center h-full">
+          <h2 className="font-enriqueta text-2xl md:text-4xl -mb-2 md:mb-2 text-center text-black">
+            Menu de Ação
+          </h2>
           <button
             onClick={onEventsClick}
-            className="bg-[#F7F1DE] rounded-3xl py-8 md:py-10 px-6 md:px-10 flex items-center justify-center gap-4 hover:scale-105 transition-all group"
+            className="
+              bg-[#F7F1DE]
+              rounded-3xl
+              py-4 md:py-10
+              px-4 md:px-10
+              shadow-xl
+              flex items-center justify-center gap-3 md:gap-4
+              hover:scale-105
+              transition-all
+            "
           >
             <div
-              className={`font-erica text-[#000000] w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl md:text-4xl group-hover:scale-110 transition-transform`}
+              className={`
+                font-erica text-[#000000]
+                w-10 h-10 md:w-16 md:h-16
+                rounded-full
+                flex items-center justify-center
+                text-xl md:text-4xl
+                group-hover:scale-110 transition-transform
+              `}
               style={{ backgroundColor: theme.border }}
             >!</div>
-            <span className="font-erica text-3xl md:text-5xl text-[#2E2E2E]">Eventos</span>
+            <span className="font-erica text-xl md:text-5xl text-[#2E2E2E]">
+              Eventos
+            </span>
           </button>
           <button 
             onClick={onBuyClick}
-            className="bg-[#F7F1DE] rounded-3xl py-8 md:py-10 px-6 md:px-10 shadow-xl flex items-center justify-center gap-4 hover:scale-105 transition-all group"
+            className="
+              bg-[#F7F1DE]
+              rounded-3xl
+              py-4 md:py-10
+              px-4 md:px-10
+              shadow-xl
+              flex items-center justify-center gap-3 md:gap-4
+              hover:scale-105
+              transition-all group
+            "
           >
             <div
-              className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl rotate-45 shadow-lg group-hover:rotate-90 transition-transform`}
+              className={`w-10 h-10 md:w-16 md:h-16 rounded-2xl rotate-45 shadow-lg group-hover:rotate-90 transition-transform`}
               style={{ backgroundColor: theme.border }}
             />
-            <span className="font-erica text-3xl md:text-5xl text-[#2E2E2E]">Comprar</span>
+            <span className="font-erica text-xl md:text-5xl text-[#2E2E2E]">Comprar</span>
           </button>
         </div>
       </div>

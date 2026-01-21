@@ -152,7 +152,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen paper-bg overflow-hidden text-[#4a3225]">
+    <div className="w-screen h-screen paper-bg text-[#4a3225]">
       {view === 'selection' && (
         <SelectionScreen 
           selectedChar={gameState.selectedCharacter}
